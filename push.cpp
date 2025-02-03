@@ -218,6 +218,7 @@ int main (int argc, char** argv) {
 
     while(!exitlatch.try_wait()) {
         sendString(sock, "EXIT");
+        usleep(500);                // So we don't flood our output queue.
     }
     // Arrive at the donelatch so the threads can disconnect
 
