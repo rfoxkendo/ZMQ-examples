@@ -216,5 +216,5 @@ int main(int argc, char** argv) {
         zmq_ctx_term(ctx),
         "Shutting down the context"
     );
-
+    return EXIT_SUCCESS;
 }
