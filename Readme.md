@@ -6,7 +6,12 @@ system as well as software to obtain timings for it.
 
 *  pair.cpp - Illlustrates the pair pattern.  Single parameter:  An end point URI.
 
+
+
 Note all programs are threaded so that the communicating partners are threads within the program.
+Note: For TCP uris at least on my WSL instance on my laptop I need to specify the IP addresses rather than
+hostnames e.g. ```tcp://127.0.0.1:3000``` works but ```tcp:localhost:3000``` does not.
+
 
 See 
 
