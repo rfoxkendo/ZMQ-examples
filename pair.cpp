@@ -113,17 +113,15 @@ sendString(void* sock, const char* mesg) {
  * started first.
  * 
  * @param uri - uri to bind to.
+ * @param ctx = Context - must be shared between main and us for inproc to work.
  * 
  * Reads a message - outputs it and sends two messages to the peer;
  * then reads a last messages which tells us to exit.
  * 
  */
 static void
-peer(const char* uri) { 
-    auto ctx = checkError(
-        zmq_ctx_new(),
-        "Creating context"
-    );
+peer(const char* uri, void* ctx) { 
+    
     // Set up as a pair peer and listen for connections:
 
     auto sock = checkError(
@@ -154,10 +152,7 @@ peer(const char* uri) {
         "Closing thread socket."
     );
 
-    checkError(
-        zmq_ctx_term(ctx),
-        "Shutting down the context"
-    );
+    
 
 }
 /**
@@ -180,7 +175,7 @@ int main(int argc, char** argv) {
 
     // Start the peer:
 
-    auto peerThread = std::thread(peer, uri);
+    auto peerThread = std::thread(peer, uri, ctx);
     sleep(1);       // let it get to the bind....
 
     // Set up the pair thread via connect:
