@@ -9,6 +9,9 @@ system as well as software to obtain timings for it.
 *  reqrep.cpp - Illustrates request/reply pattern, parameters uri, nclients, nreplies
 *  pubsub.cpp - Illustrates publish/subscribe pattern. Parameters uri, nsubscribers, npublications.
 
+Note:  nanomsg and its related nng have two pattersn that are not directly supported by zmq:
+*  bus - everyone can send everyone receives what's sent.
+*  survey/respond - a surveyor sends to all responders, some of which may respond.
 
 Note all programs are threaded so that the communicating partners are threads within the program.
 Note: For TCP uris at least on my WSL instance on my laptop I need to specify the IP addresses rather than
