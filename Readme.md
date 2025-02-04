@@ -7,6 +7,7 @@ system as well as software to obtain timings for it.
 *  pair.cpp - Illlustrates the pair pattern.  Single parameter:  An end point URI.
 *  push.cpp - Illustrates the push/pull pattern.  parameters: uri, npullers, nmsgs
 *  reqrep.cpp - Illustrates request/reply pattern, parameters uri, nclients, nreplies
+*  pubsub.cpp - Illustrates publish/subscribe pattern. Parameters uri, nsubscribers, npublications.
 
 
 Note all programs are threaded so that the communicating partners are threads within the program.
