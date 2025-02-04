@@ -15,7 +15,7 @@ ipc:///reqrep  similarly for inproc but without the /tmp part of the path.
 
 The programs and their associated automation scripts:
 
-*  pair - pairtimings. Pair usage is:
+*  pair - pairtimings. the pairtimings script writes to pairtimngs.txt. pair usage is:
 ```bash
 pair uri nummsgs size
 ```

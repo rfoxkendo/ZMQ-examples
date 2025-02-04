@@ -103,6 +103,32 @@ ignore(void* socket) {
     }
 }
 /**
+ *  setBuffering
+ *    Set send/receive buffers to 2MBytes.
+ * @param socket
+ * 
+ */
+static void
+setBuffering(void* socket) {
+    int maxSize = 1024*1024*2;     // 2mbytes.
+    checkError(
+        zmq_setsockopt(socket, ZMQ_SNDBUF, &maxSize, sizeof(int)),
+        "Setting send buffer size"
+    );
+    checkError(
+        zmq_setsockopt(socket, ZMQ_RCVBUF, &maxSize, sizeof(int)),
+        "Setting receive buffer size"
+    );
+    // They claim we should not need this but...
+
+    int64_t maxMsg = 1024*1024*2;
+    checkError(
+        zmq_setsockopt(socket, ZMQ_MAXMSGSIZE, &maxMsg, sizeof(maxMsg)),
+        "Setting max message size"
+    );
+
+}
+/**
  * peer
  *    The peer thread for the pair.
  * @param uri - uri to zmq_connect to.
@@ -120,10 +146,12 @@ peer(std::string uri, void* ctx, int nmsgs, int size) {
         zmq_socket(ctx, ZMQ_PAIR),
         "Creating thread's pair socket."
     );
+    setBuffering(socket);
     checkError(
         zmq_connect(socket, uri.c_str()),
         "Connecting to peer."
     );
+    setBuffering(socket);
     char* msg = new char[size];
     // exchange messages:
 
@@ -156,10 +184,12 @@ run(std::string uri, void* context, int nummsgs, int mainsize, int thrsize) {
         zmq_socket(context, ZMQ_PAIR),
         "Creating main thread socket"
     );
+    setBuffering(socket);
     checkError(
         zmq_bind(socket, uri.c_str()),
         "Binding socket in main thread."
     );
+    setBuffering(socket);
     // Start the peer thread:
 
     std::thread peerThread(peer, uri, context, nummsgs, thrsize);
@@ -204,6 +234,7 @@ int main(int argc, char** argv) {
     );
 
     double duration1 = run(uri, context, nummsgs, size, 1); // 'big' send, small return.
+    sleep(1);                          // Let the socket die?
     double duration2 = run(uri, context, nummsgs, 1, size); // small send, 'big' return.
 
 
@@ -217,13 +248,13 @@ int main(int argc, char** argv) {
     std::cout << "Big sends small replies\n";
     std::cout << "Time    :  " << duration1 << std::endl;
     std::cout << "Msgs/sec:  " << (double)nummsgs/duration1 << std::endl;
-    std::cout << "KB/sec  :  " << (double)size*(double)nummsgs/duration1 << std::endl;
+    std::cout << "KB/sec  :  " << (double)size*(double)nummsgs/(1024.0*duration1) << std::endl;
 
     // ditto for small sends:
 
     std::cout << "Small sends, big replies\n";
     std::cout << "Time    :  " << duration2 << std::endl;
     std::cout << "Msgs/sec:  " << (double)nummsgs/duration2 << std::endl;
-    std::cout << "KB/sec  :  " << (double)size*(double)nummsgs/duration2 << std::endl;
+    std::cout << "KB/sec  :  " << (double)size*(double)nummsgs/(1024.0*duration2) << std::endl;
 
 }
