@@ -1,4 +1,4 @@
-PROGRAMS=pair push reqrep
+PROGRAMS=pair push reqrep pubsub
 CXXFLAGS=-g -std=c++20 -lzmq
 
 all : $(PROGRAMS)
@@ -11,6 +11,9 @@ push : push.cpp
 
 reqrep: reqrep.cpp
 	$(CXX) -o reqrep reqrep.cpp $(CXXFLAGS)
+
+pubsub: pubsub.cpp
+	$(CXX) -o pubsub pubsub.cpp $(CXXFLAGS)
 
 clean:
 	rm -f $(PROGRAMS)
