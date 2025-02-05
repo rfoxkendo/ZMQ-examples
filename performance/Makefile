@@ -1,4 +1,4 @@
-PROGRAMS=pair # push reqrep pubsub
+PROGRAMS=pair push # reqrep pubsub
 CXXFLAGS=-g -std=c++20 -lzmq
 
 all : $(PROGRAMS)

@@ -91,6 +91,7 @@ ignore(void* socket) {
         zmq_recvmsg(socket, &msg, 0),
         "Receiving message part."
     );
+    checkError(zmq_msg_close(&msg), "Freeing message");
     int more;
     size_t morelen(sizeof(more));
     checkError(
