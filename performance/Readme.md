@@ -19,3 +19,10 @@ The programs and their associated automation scripts:
 ```bash
 pair uri nummsgs size
 ```
+* push - pushtimings. The pushtimings scrip writes to pushtimings.txt. push usage is:
+```bash
+push uri nummsgs numpullers msgsize
+```
+
+
+
