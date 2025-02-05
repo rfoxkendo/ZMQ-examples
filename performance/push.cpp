@@ -238,7 +238,7 @@ int main (int argc, char**argv) {
             new std::thread(puller, uri, ctx, std::ref(done), std::ref(exitlatch))
         );
     }
-
+    usleep(5000);                     // wait a half sec for everyone to connect.
     char* message = new char[msgsize];
     *message = 0;       // not an exit msg.
     int sent(0);        // total sends.
