@@ -159,7 +159,7 @@ setBuffering(void* socket) {
     );
     // send/receive high watermarks -> unlimited
 
-    int hwm = 0;
+    int hwm = 10000;
     checkError(
         zmq_setsockopt(socket, ZMQ_RCVHWM, &hwm, sizeof(int)),
         "Setting socket RCV high water mark"
