@@ -157,6 +157,17 @@ setBuffering(void* socket) {
         zmq_setsockopt(socket, ZMQ_MAXMSGSIZE, &maxMsg, sizeof(maxMsg)),
         "Setting max message size"
     );
+    // send/receive high watermarks -> unlimited
+
+    int hwm = 0;
+    checkError(
+        zmq_setsockopt(socket, ZMQ_RCVHWM, &hwm, sizeof(int)),
+        "Setting socket RCV high water mark"
+    );
+    checkError(
+        zmq_setsockopt(socket, ZMQ_SNDHWM, &hwm, sizeof(int)),
+        "Setting  socket XMIT high water mark"
+    );
 
 }
 
@@ -238,7 +249,7 @@ int main(int argc, char** argv) {
         zmq_socket(context, ZMQ_PUB),
         "Creating publication socket."
     );
-
+    setBuffering(socket);
     checkError(
         zmq_bind(socket, uri.c_str()), 
         "Binding the publisher to the endpoint"

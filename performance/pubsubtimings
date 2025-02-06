@@ -1,0 +1,19 @@
+#!/bin/bash
+#
+#  Get timngs for the push/pull communications pattern.
+
+nummsgs=100000    # Seems good.
+echo =============== Timing pubsub communications > pubsubtimings.txt # makes new file.
+
+for endpoint in tcp://127.0.0.1:3000 ipc:///tmp/pair inproc:///pair
+do 
+    echo Timings for $endpoint >> pubsubtimings.txt
+    for  size in 1024 2048 4096 8192 16384 32768 65536 131072 262144 524288 1048576
+    do
+        for pullers in 1 2 3 4 5
+        do
+            echo ---- pullers: $pullers size: $size >>  pubsubtimings.txt
+            ./pubsub $endpoint $nummsgs $pullers $size >> pubsubtimings.txt
+        done
+    done
+done
