@@ -19,10 +19,13 @@ The programs and their associated automation scripts:
 ```bash
 pair uri nummsgs size
 ```
-* push - pushtimings. The pushtimings scrip writes to pushtimings.txt. push usage is:
+* push - pushtimings. The pushtimings script writes to pushtimings.txt. push usage is:
 ```bash
 push uri nummsgs numpullers msgsize
 ```
-
+* pubsub - pubsubtimings. The pubsubtimings script writes to pubsubtimings.txt. Usage of the pubusb progfam is:
+```bash
+pubsub uri nummsgs numsubscribers msgsize
+```
 
 
