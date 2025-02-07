@@ -1,0 +1,16 @@
+#!/bin/bash
+#    Time the req pattern for various parameters.
+#    data is in reqtimings.txt
+
+nummsgs=10000    # Seems good.
+echo =========== Timing req communication > reqtimings.txt
+for endpoint in tcp://127.0.0.1:3000 ipc:///tmp/req inproc:///req
+do
+    echo Timings for $endpoint >> reqtimings.txt
+    for size in 1024 2048 4096 8192 16384 32768 65536 131072 262144 524288 1048576
+    do
+        echo -------- Big messages are $size bytes >> reqtimings.txt
+        ./req $endpoint $nummsgs $size >>reqtimings.txt
+        sleep 1   # else I get addr already in use messages intermittently.
+    done
+done
