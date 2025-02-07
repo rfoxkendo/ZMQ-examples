@@ -15,17 +15,24 @@ ipc:///reqrep  similarly for inproc but without the /tmp part of the path.
 
 The programs and their associated automation scripts:
 
-*  pair - pairtimings. the pairtimings script writes to pairtimngs.txt. pair usage is:
+*  pair - pairtimings. Times the pair communications pattern
+The pairtimings script writes to pairtimngs.txt. pair usage is:
 ```bash
 pair uri nummsgs size
 ```
-* push - pushtimings. The pushtimings script writes to pushtimings.txt. push usage is:
+* push - pushtimings. Times the push/pull communications pattern.
+The pushtimings script writes to pushtimings.txt. push usage is:
 ```bash
 push uri nummsgs numpullers msgsize
 ```
-* pubsub - pubsubtimings. The pubsubtimings script writes to pubsubtimings.txt. Usage of the pubusb progfam is:
+* pubsub - pubsubtimings. Times the publication/subscription communication pattern.
+The pubsubtimings script writes to pubsubtimings.txt. Usage of the pubusb progfam is:
 ```bash
 pubsub uri nummsgs numsubscribers msgsize
 ```
-
+*  req - reqtimings - times the req/rep pattern.  reqtimings times many cases and writes to reqtimins.txt
+req  usage is:
+```bash
+req uri nummsgs bigmsgsize
+```
 

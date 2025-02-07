@@ -295,6 +295,7 @@ int main(int argc, char** argv) {
         "Terminating ZMQ Context."
     );
 
+
     // report the results.
 
     auto duration = end - start;
